@@ -23,4 +23,13 @@ public class SignupDto {
             .email(signupMemberForm.getEmail())
             .build();
     }
+
+    public static SignupDto from(SignupAdminForm signupAdminForm) {
+        return SignupDto.builder()
+            .password(signupAdminForm.getPassword())
+            .nickname(signupAdminForm.getAdminName())
+            .phone(signupAdminForm.getPhone())
+            .email(signupAdminForm.getEmail())
+            .build();
+    }
 }

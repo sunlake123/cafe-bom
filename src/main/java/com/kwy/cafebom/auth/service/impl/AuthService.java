@@ -1,9 +1,11 @@
 package com.kwy.cafebom.auth.service.impl;
 
+import static com.kwy.cafebom.common.config.security.Role.ROLE_ADMIN;
 import static com.kwy.cafebom.common.config.security.Role.ROLE_USER;
 import static com.kwy.cafebom.common.exception.ErrorCode.EMAIL_ALREADY_EXISTS;
 import static com.kwy.cafebom.common.exception.ErrorCode.NICKNAME_ALREADY_EXISTS;
 
+import com.kwy.cafebom.auth.dto.SignupAdminForm;
 import com.kwy.cafebom.auth.dto.SignupDto;
 import com.kwy.cafebom.common.exception.CustomException;
 import com.kwy.cafebom.front.member.domain.Member;
@@ -32,4 +34,21 @@ public class AuthService {
         memberRepository.save(
             Member.from(signupDto, passwordEncoder.encode(signupDto.getPassword()), ROLE_USER));
     }
+
+    public void signup(SignupAdminForm signupAdminForm) {
+        SignupDto signupDto = SignupDto.from(signupAdminForm);
+
+        memberRepository.findByNickname(signupAdminForm.getAdminName()).ifPresent(member -> {
+            throw new CustomException(NICKNAME_ALREADY_EXISTS);
+        });
+
+        memberRepository.findByEmail(signupAdminForm.getEmail()).ifPresent(member -> {
+            throw new CustomException(EMAIL_ALREADY_EXISTS);
+        });
+
+        memberRepository.save(
+            Member.from(signupDto, passwordEncoder.encode(signupDto.getPassword()), ROLE_ADMIN));
+    }
+
+
 }
