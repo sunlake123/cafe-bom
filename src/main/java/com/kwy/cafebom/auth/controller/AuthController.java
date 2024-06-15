@@ -1,7 +1,12 @@
 package com.kwy.cafebom.auth.controller;
 
+import static com.kwy.cafebom.auth.dto.SigninDto.*;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.OK;
 
+import com.kwy.cafebom.auth.dto.SigninDto;
+import com.kwy.cafebom.auth.dto.SigninDto.Request;
+import com.kwy.cafebom.auth.dto.SigninForm;
 import com.kwy.cafebom.auth.dto.SignupAdminForm;
 import com.kwy.cafebom.auth.dto.SignupDto;
 import com.kwy.cafebom.auth.dto.SignupMemberForm;
@@ -12,6 +17,7 @@ import com.kwy.cafebom.common.exception.ErrorCode;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,5 +50,19 @@ public class AuthController {
         }
         authService.signup(signupAdminForm);
         return ResponseEntity.status(CREATED).build();
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<SigninForm.Response> signin(
+        @RequestBody @Valid SigninForm.Request signinForm
+    ) {
+        Response signinDto = authService.signin(Request.from(signinForm));
+        String accessToken = tokenProvider.generateToken(
+                signinDto.getMemberId(), signinDto.getEmail(), signinDto.getRole());
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(
+                        SigninForm.Response.builder()
+                                .token(accessToken).build()
+                );
     }
 }
