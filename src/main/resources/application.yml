@@ -18,3 +18,7 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+  jwt:
+    secret: Y2FmZS1ib20taGloaSBvdXIgdGVhbSBjaG9pZ28gaGdGVhbSBjaG9pZ28gaGVoZWhlaGUKIgdGVhbSBjaG9pZ28gaGVoZWhlaGUK
+admin:
+  code: 230914
