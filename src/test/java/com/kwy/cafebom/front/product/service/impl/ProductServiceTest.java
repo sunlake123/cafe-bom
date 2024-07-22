@@ -7,8 +7,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 
 import com.kwy.cafebom.common.exception.CustomException;
+import com.kwy.cafebom.front.cart.domain.CartOptionRepository;
 import com.kwy.cafebom.front.product.domain.Option;
 import com.kwy.cafebom.front.product.domain.OptionCategory;
+import com.kwy.cafebom.front.product.domain.OptionCategoryRepository;
 import com.kwy.cafebom.front.product.domain.OptionRepository;
 import com.kwy.cafebom.front.product.domain.Product;
 import com.kwy.cafebom.front.product.domain.ProductCategory;
@@ -71,7 +73,7 @@ class ProductServiceTest {
             .picture("picture")
             .build());
 
-        given(productCategoryRepository.existsByProductCategoryId(coffee.getId())).willReturn(true);
+        given(productCategoryRepository.existsById(coffee.getId())).willReturn(true);
         given(productRepository.findAllByProductCategoryId(coffee.getId())).willReturn(productList);
 
         // when
@@ -160,3 +162,14 @@ class ProductServiceTest {
         assertThat(productDetails.getProductOptionList().get(espressoSize)).isEqualTo(optionList);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
