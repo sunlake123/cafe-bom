@@ -36,7 +36,7 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductDto> findProductList(Integer productCategoryId) {
 
-        if (!productCategoryRepository.existsByProductCategoryId(productCategoryId)) {
+        if (!productCategoryRepository.existsById(productCategoryId)) {
             throw new CustomException(ErrorCode.PRODUCTCATEGORY_NOT_EXISTS);
         }
 

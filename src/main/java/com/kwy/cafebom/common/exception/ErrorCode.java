@@ -2,6 +2,7 @@ package com.kwy.cafebom.common.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +28,19 @@ public enum ErrorCode {
 
     // ProductCategory
     PRODUCTCATEGORY_NOT_EXISTS("존재하지 않는 상품 카테고리입니다.", BAD_REQUEST),
-    PRODUCTCATEGORY_ALREADY_EXISTS("이미 존재하는 상품 카테고리입니다.", CONFLICT);
+    PRODUCTCATEGORY_ALREADY_EXISTS("이미 존재하는 상품 카테고리입니다.", CONFLICT),
+
+    // Cart
+    CART_IS_EMPTY("장바구니에 담긴 상품이 없습니다.", BAD_REQUEST),
+    CART_DOES_NOT_EXIST("존재하지 않는 장바구니입니다.",BAD_REQUEST),
+
+    // Option
+    OPTION_NOT_EXISTS("존재하지 않는 옵션입니다.", BAD_REQUEST),
+    OPTION_CATEGORY_NOT_EXISTS("존재하지 않는 옵션 카테고리입니다.", BAD_REQUEST),
+    OPTION_OPTION_CATEGORY_NOT_MATCH("옵션 카테고리와 옵션이 일치하지 않습니다.", BAD_REQUEST),
+
+    // CartOption
+    CARTOPTION_NOT_EXISTS("해당 옵션의 장바구니 존재하지 않습니다.", BAD_REQUEST);
 
     private final String message;
     private final HttpStatus httpStatus;
